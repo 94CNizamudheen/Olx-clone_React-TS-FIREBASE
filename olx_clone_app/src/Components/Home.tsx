@@ -50,7 +50,7 @@ const Home = ({ search, menu }: ProductsProp) => {
         };
 
         fetchProducts();
-    }, []); // Empty dependency array means this runs once on mount
+    }, []); 
 
     if (loading) {
         return <div className="text-center mt-10">Loading products...</div>;
@@ -70,8 +70,8 @@ const Home = ({ search, menu }: ProductsProp) => {
                 )
                 .map((data) => (
                     <Link to="/details" state={{ data: data }} key={data.id}>
-                        <div className="border border-spacing-1 p-2">
-                            <img src={data?.image} alt={data.title} className="w-60 h-48 object-cover" />
+                        <div className=" border border-spacing-1 p-2 items-center">
+                            <img src={data?.image} alt={data.title} className="w-60 h-48 object-cover m-auto  " />
                             <h1 className="font-bold text-xl">{data?.title}</h1>
                             <h1>₹ {data?.price}</h1>
                             <h1>{data?.category}</h1>
