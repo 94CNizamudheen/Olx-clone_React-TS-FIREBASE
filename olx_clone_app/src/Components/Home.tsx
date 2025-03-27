@@ -61,23 +61,29 @@ const Home = ({ search, menu }: ProductsProp) => {
     }
 
     return (
-        <div className="grid grid-cols-4 ml-3 mt-3">
-            {products
-                ?.filter(
-                    (data) =>
-                        data.title.toLowerCase().includes(search?.toLowerCase()) &&
-                        (menu ? data.category.toLowerCase() === menu.toLowerCase() : true)
-                )
-                .map((data) => (
-                    <Link to="/details" state={{ data: data }} key={data.id}>
-                        <div className=" border border-spacing-1 p-2 items-center">
-                            <img src={data?.image} alt={data.title} className="w-60 h-48 object-cover m-auto  " />
-                            <h1 className="font-bold text-xl">{data?.title}</h1>
-                            <h1>₹ {data?.price}</h1>
-                            <h1>{data?.category}</h1>
-                        </div>
-                    </Link>
-                ))}
+        <div className="container mx-auto px-4 py-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {products
+                    ?.filter(
+                        (data) =>
+                            data.title.toLowerCase().includes(search?.toLowerCase()) &&
+                            (menu ? data.category.toLowerCase() === menu.toLowerCase() : true)
+                    )
+                    .map((data) => (
+                        <Link to="/details" state={{ data: data }} key={data.id}>
+                            <div className="border border-gray-200 rounded-lg p-4 hover:shadow-lg transition-shadow duration-300">
+                                <img
+                                    src={data?.image}
+                                    alt={data.title}
+                                    className="w-full h-48 object-cover rounded-md mb-4"
+                                />
+                                <h1 className="font-bold text-lg md:text-xl truncate">{data?.title}</h1>
+                                <h1 className="text-gray-700">₹ {data?.price}</h1>
+                                <h1 className="text-sm text-gray-500">{data?.category}</h1>
+                            </div>
+                        </Link>
+                    ))}
+            </div>
         </div>
     );
 };
