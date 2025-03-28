@@ -2,7 +2,8 @@
 import guitar from '../assets/guitar.png';
 import google from '../assets/google.png';
 import phone from '../assets/phone.png';
-import { signInWithPopup } from 'firebase/auth';
+import { useState } from 'react';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../Firebase/setup';
 import React from 'react';
 import { useAuth } from '../AuthContext';
@@ -16,6 +17,10 @@ const Login = ({ setLoginPop }: popupProp) => {
   const navigate= useNavigate()
 
   const { user } = useAuth();
+   // State for email and password
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
+   const [error, setError] = useState('');
   console.log(user)
 
   const googleSignIn = async () => {
@@ -26,6 +31,17 @@ const Login = ({ setLoginPop }: popupProp) => {
       console.error(error)
     }
 
+  }
+  const emailSignIn= async(e:React.FormEvent)=>{
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth,email,password);
+      setLoginPop?.(false);
+      navigate('/')
+    } catch (error:unknown) {
+      setError("invalid email or password")
+      console.log(error)
+    }
   }
 
   return (
@@ -80,10 +96,37 @@ const Login = ({ setLoginPop }: popupProp) => {
                 {/* Divider */}
                 <h1 className="text-center mt-4 text-sm sm:text-base text-gray-500">OR</h1>
 
+            
+
                 {/* Email Login */}
-                <h1 className="text-center mt-4 text-sm sm:text-base underline cursor-pointer text-blue-600 hover:text-blue-800">
-                  Login with Email
-                </h1>
+                
+                <form onSubmit={emailSignIn} className="mt-4 mr-20 ml-20">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    
+                  />
+                  {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md mt-3 hover:bg-blue-700 transition duration-200"
+                  >
+                    Login with Email
+                  </button>
+                </form>
+                
+                
                 <p  className="text-center mt-6 text-sm text-gray-700">
                 Don't have an account?{" "}
                 <Link to="/signup" className="text-blue-600 hover:text-blue-800 underline">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import guitar from '../assets/guitar.png';
+import avetar from '../assets/loginEntryPointChat.webp';
 import google from '../assets/google.png';
 import phone from '../assets/phone.png';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
@@ -103,7 +103,7 @@ const Signup = ({ setSignupPop }: SignupProps) => {
 
                             {/* Modal Body */}
                             <div className="mt-8 text-center">
-                                <img src={guitar} alt="Guitar" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto" />
+                                <img src={avetar} alt="Guitar" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto" />
                                 <p className="text-sm sm:text-base font-medium mt-4 sm:mt-5 text-gray-800">
                                     Help us become one of the safest places <br /> to buy and sell
                                 </p>

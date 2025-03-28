@@ -3,9 +3,13 @@ import lens from "../assets/lens.png";
 import arrow from "../assets/arrow.png";
 import search from "../assets/search.png";
 import Login from "./Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import LogoutConfirm from "./LogoutConfirm";
+import { db } from '../Firebase/setup'
+import { doc ,getDoc} from "firebase/firestore";
+
 
 type SearchProp = {
   setSearch: (Value: string) => void;
@@ -13,8 +17,28 @@ type SearchProp = {
 
 const Navbar = ({ setSearch }: SearchProp) => {
   const [loginpop, setLoginPop] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, } = useAuth();
+  const [userName,setUserName]=useState('');
+
+  useEffect(()=>{
+   if(user?.uid){
+    const fetchUserName=async()=>{
+      try {
+        const userRef=doc(db,"users",user.uid);
+        const userSnap= await getDoc(userRef);
+        if(userSnap.exists()){
+          setUserName(userSnap.data().name);
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchUserName();
+   } 
+  },[user])
+
   const navigate=useNavigate();
+
   return (
     <>
       <div className="flex flex-wrap items-center justify-between px-4 py-3 bg-slate-100 shadow-md gap-4 md:gap-6">
@@ -56,10 +80,8 @@ const Navbar = ({ setSearch }: SearchProp) => {
         {/* User/Login Section */}
         {user ? (
           <div className="flex items-center gap-4">
-            <h1 className="font-bold text-sm md:text-lg truncate max-w-[150px]">{user?.email}</h1>
-            <button onClick={logout} className="text-red-500 underline text-sm md:text-base">
-              Logout
-            </button>
+            <h1 className="font-bold text-sm md:text-lg truncate max-w-[150px]">{userName}</h1>
+         <LogoutConfirm></LogoutConfirm>
           </div>
         ) : (
           <div

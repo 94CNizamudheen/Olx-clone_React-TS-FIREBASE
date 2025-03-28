@@ -8,7 +8,7 @@ import mobility from '../assets/mobility (1).svg'
 
 const Footer = () => {
     return (
-        <footer className="fixed bottom-0 left-0 w-full bg-cyan-950 py-4 z-10">
+        <footer className=" left-0 w-full bg-cyan-950 py-4 z-10">
       <div className="container mx-auto px-4 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left Section */}
         <div className="flex items-center border-r-2 border-white pr-6 md:pr-10">
