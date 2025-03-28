@@ -16,7 +16,7 @@ const Main = () => {
     <Navbar setSearch={setSearch}/>
     <MenuBar setMenu={setMenu} />
     <Home search={search} menu={menu} />
-    <Footer/>
+    <Footer />
     </div>
   )
 }

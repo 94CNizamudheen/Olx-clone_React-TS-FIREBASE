@@ -5,7 +5,7 @@ import search from "../assets/search.png";
 import Login from "./Login";
 import { useState } from "react";
 import { useAuth } from "../AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type SearchProp = {
   setSearch: (Value: string) => void;
@@ -14,6 +14,7 @@ type SearchProp = {
 const Navbar = ({ setSearch }: SearchProp) => {
   const [loginpop, setLoginPop] = useState(false);
   const { user, logout } = useAuth();
+  const navigate=useNavigate();
   return (
     <>
       <div className="flex flex-wrap items-center justify-between px-4 py-3 bg-slate-100 shadow-md gap-4 md:gap-6">
@@ -37,7 +38,7 @@ const Navbar = ({ setSearch }: SearchProp) => {
             onChange={(e) => setSearch(e.target.value)}
             type="text"
             placeholder="Find Car, Mobile, and more..."
-            className="ml-2 flex-grow outline-none p-2 text-sm md:text-base"
+            className="ml-2 flex-grow outline-none p-2 text-sm md:text-base "
           />
           <img src={search} alt="Search Icon" className="w-10 h-10 md:w-12 md:h-10" />
         </div>
@@ -55,14 +56,14 @@ const Navbar = ({ setSearch }: SearchProp) => {
         {/* User/Login Section */}
         {user ? (
           <div className="flex items-center gap-4">
-            <h1 className="font-bold text-sm md:text-lg truncate max-w-[150px]">{user.email}</h1>
+            <h1 className="font-bold text-sm md:text-lg truncate max-w-[150px]">{user?.email}</h1>
             <button onClick={logout} className="text-red-500 underline text-sm md:text-base">
               Logout
             </button>
           </div>
         ) : (
           <div
-            onClick={() => setLoginPop(true)}
+            onClick={() => navigate('/login')}
             className="flex underline cursor-pointer hover:no-underline"
           >
             <h1 className="font-bold text-sm md:text-lg">Login</h1>
