@@ -153,7 +153,7 @@ const SellProducts: React.FC = () => {
                         </p>
                     </div>
                     <button 
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/login')}
                         className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg"
                     >
                         Login Now

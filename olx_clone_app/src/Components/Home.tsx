@@ -22,7 +22,6 @@ type ProductsProp = {
 
 const Home = ({ search, menu }: ProductsProp) => {
     const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -44,17 +43,11 @@ const Home = ({ search, menu }: ProductsProp) => {
             } catch (err) {
                 console.error("Error fetching products:", err);
                 setError("Failed to load products. Please try again later.");
-            } finally {
-                setLoading(false);
             }
         };
 
         fetchProducts();
     }, []); 
-
-    if (loading) {
-        return <div className="text-center mt-10">Loading products...</div>;
-    }
 
     if (error) {
         return <div className="text-center mt-10 text-red-500">{error}</div>;

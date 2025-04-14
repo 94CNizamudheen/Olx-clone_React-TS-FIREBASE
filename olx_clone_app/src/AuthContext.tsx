@@ -5,7 +5,7 @@ import { auth } from './Firebase/setup';
 
 interface AuthContextType{
     user:User|null,
-    logout:()=>void
+    logout:()=>void,
 };
 const AuthContext= createContext<AuthContextType|undefined>(undefined);
 
@@ -24,7 +24,7 @@ export const AuthProvider=({children}:{children:ReactNode})=>{
         await signOut(auth);
     };
     return(
-        <AuthContext.Provider value={{user,logout}}>
+        <AuthContext.Provider value={{user,logout,}}>
             {children}
         </AuthContext.Provider>
     );

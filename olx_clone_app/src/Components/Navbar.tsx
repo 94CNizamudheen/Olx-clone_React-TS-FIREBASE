@@ -76,12 +76,14 @@ const Navbar = ({ setSearch }: SearchProp) => {
             className="w-5 h-5 md:w-6 md:h-6 cursor-pointer ml-2"
           />
         </div>
+       
 
         {/* User/Login Section */}
+       
         {user ? (
           <div className="flex items-center gap-4">
-            <h1 className="font-bold text-sm md:text-lg truncate max-w-[150px]">{userName}</h1>
-         <LogoutConfirm></LogoutConfirm>
+            <h1 className="font-bold text-sm md:text-lg truncate max-w-[150px]">{user?.displayName||userName}</h1>
+         <LogoutConfirm/>
           </div>
         ) : (
           <div
@@ -107,3 +109,5 @@ const Navbar = ({ setSearch }: SearchProp) => {
 };
 
 export default Navbar;
+
+

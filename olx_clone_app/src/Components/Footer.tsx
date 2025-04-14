@@ -25,7 +25,6 @@ const Footer = () => {
         </div>
       </div>
 
-
       <div className="text-white text-xs text-center md:text-right mt-3 md:mt-0 px-4 md:mr-6">
         All rights reserved © 2006-{new Date().getFullYear()} OLX
       </div>

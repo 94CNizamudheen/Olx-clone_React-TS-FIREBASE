@@ -2,7 +2,7 @@
 import guitar from '../assets/guitar.png';
 import google from '../assets/google.png';
 import phone from '../assets/phone.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../Firebase/setup';
 import React from 'react';
@@ -14,13 +14,20 @@ type popupProp = {
 }
 
 const Login = ({ setLoginPop }: popupProp) => {
-  const navigate= useNavigate()
+  const navigate = useNavigate()
 
   const { user } = useAuth();
-   // State for email and password
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState('');
-   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      setLoginPop?.(false);
+      navigate('/');
+    }
+  }, [user, navigate, setLoginPop]);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   console.log(user)
 
   const googleSignIn = async () => {
@@ -32,13 +39,13 @@ const Login = ({ setLoginPop }: popupProp) => {
     }
 
   }
-  const emailSignIn= async(e:React.FormEvent)=>{
+  const emailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth,email,password);
+      await signInWithEmailAndPassword(auth, email, password);
       setLoginPop?.(false);
       navigate('/')
-    } catch (error:unknown) {
+    } catch (error: unknown) {
       setError("invalid email or password")
       console.log(error)
     }
@@ -50,7 +57,7 @@ const Login = ({ setLoginPop }: popupProp) => {
       <div
         className="fixed inset-0 bg-zinc-950 bg-opacity-75 transition-opacity"
         aria-hidden="true"
-        onClick={() => setLoginPop?.(false)} // Close on overlay click
+        onClick={() => setLoginPop?.(false)}
       ></div>
 
       {/* Modal Container */}
@@ -96,10 +103,10 @@ const Login = ({ setLoginPop }: popupProp) => {
                 {/* Divider */}
                 <h1 className="text-center mt-4 text-sm sm:text-base text-gray-500">OR</h1>
 
-            
+
 
                 {/* Email Login */}
-                
+
                 <form onSubmit={emailSignIn} className="mt-4 mr-20 ml-20">
                   <input
                     type="email"
@@ -107,7 +114,7 @@ const Login = ({ setLoginPop }: popupProp) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    
+
                   />
                   <input
                     type="password"
@@ -115,7 +122,7 @@ const Login = ({ setLoginPop }: popupProp) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    
+
                   />
                   {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                   <button
@@ -125,13 +132,13 @@ const Login = ({ setLoginPop }: popupProp) => {
                     Login with Email
                   </button>
                 </form>
-                
-                
-                <p  className="text-center mt-6 text-sm text-gray-700">
-                Don't have an account?{" "}
-                <Link to="/signup" className="text-blue-600 hover:text-blue-800 underline">
-                Sign Up
-                </Link>
+
+
+                <p className="text-center mt-6 text-sm text-gray-700">
+                  Don't have an account?{" "}
+                  <Link to="/signup" className="text-blue-600 hover:text-blue-800 underline">
+                    Sign Up
+                  </Link>
                 </p>
 
 

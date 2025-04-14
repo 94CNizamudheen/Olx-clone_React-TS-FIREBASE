@@ -5,12 +5,8 @@ import Home from "./Home";
 import Footer from "./Footer";
 
 const Main = () => {
-
-   
     const [search,setSearch]= useState("")
     const [menu,setMenu]=useState('');
-
-
   return (
     <div>
     <Navbar setSearch={setSearch}/>
